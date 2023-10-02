@@ -1,0 +1,14 @@
+.to-do-list {
+  background-color: rgb(42, 41, 41);
+  color: white !important;
+  width: 50%;
+  height: 50%;
+}
+
+.list-item {
+  color: white !important;
+}
+
+.hidden-element {
+  display: none;
+}

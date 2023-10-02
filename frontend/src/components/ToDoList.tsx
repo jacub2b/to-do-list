@@ -2,6 +2,7 @@ import { List, Input } from "antd";
 import ToDoItem from "./ToDoItem";
 import { useEffect, useState } from "react";
 import { Task } from "../types/Task";
+import '../style/to-do-list.css'
 
 const ToDoList = () => {
   const data: Task[] = [
@@ -45,6 +46,7 @@ const ToDoList = () => {
   return (
     <>
       <List
+        className="to-do-list"
         size="small"
         header={<h1>{"Pending tasks (" + tasksData.length + ")"} </h1>}
         footer={

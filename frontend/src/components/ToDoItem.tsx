@@ -39,7 +39,7 @@ const ToDoItem = ({ children, onDelete }: ToDoItemProps) => {
 
   return (
     <>
-      <List.Item onDoubleClick={handleStartEditing}>
+      <List.Item onDoubleClick={handleStartEditing} className="list-item">
         {isBeingEdited ? (
           <Input 
           value={editedText}
