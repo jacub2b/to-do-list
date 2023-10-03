@@ -2,7 +2,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface TaskDocument extends Document {
   text: string;
-  completed: boolean;
+  wasCompleted: boolean;
   id: string;
 }
 
@@ -12,7 +12,7 @@ const taskSchema = new Schema<TaskDocument>(
       type: String,
       required: true,
     },
-    completed: {
+    wasCompleted: {
       type: Boolean,
       default: false,
     },

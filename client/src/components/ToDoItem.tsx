@@ -20,7 +20,7 @@ const ToDoItem = ({ children, onDelete }: ToDoItemProps) => {
   };
 
   const handleCompletion = async () => {
-    const updatedTask = {...children, isCompleted: true};
+    const updatedTask = {...children, wasCompleted: true};
     const savedTask = await editTask(updatedTask);
     setIsCompleted(savedTask.wasCompleted);
   };
