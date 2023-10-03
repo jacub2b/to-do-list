@@ -2,6 +2,7 @@ import { Input, List } from "antd";
 import ToDoButton from "./ToDoButton";
 import { useState } from "react";
 import { Task } from "../types/Task";
+import { editTask } from "../services/taskService";
 
 interface ToDoItemProps {
   children: Task;
@@ -19,8 +20,9 @@ const ToDoItem = ({ children, onDelete }: ToDoItemProps) => {
   };
 
   const handleCompletion = async () => {
-    //update db
-    setIsCompleted(!isCompleted);
+    const updatedTask = {...children, isCompleted: true};
+    const savedTask = await editTask(updatedTask);
+    setIsCompleted(savedTask.wasCompleted);
   };
 
   const handleDeletion = () => {
@@ -33,8 +35,9 @@ const ToDoItem = ({ children, onDelete }: ToDoItemProps) => {
 
   const handleFinishEditing = async () => {
     setIsBeingEdited(false);
-    //update db
-    setText(editedText);
+    const editedTask :Task = {...children, text: editedText};
+    const savedTask = await editTask(editedTask);
+    setText(savedTask.text);
   }
 
   return (

@@ -4,7 +4,7 @@ import Task, { TaskDocument } from '../models/taskModel';
 export const getAllTasks = async (req: Request, res: Response): Promise<void> => {
   try {
     const tasks: TaskDocument[] = await Task.find();
-    res.status(200).json({ tasks });
+    res.status(200).json(tasks);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });

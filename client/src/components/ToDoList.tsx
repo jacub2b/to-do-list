@@ -2,44 +2,44 @@ import { List, Input } from "antd";
 import ToDoItem from "./ToDoItem";
 import { useEffect, useState } from "react";
 import { Task } from "../types/Task";
-import '../style/to-do-list.css'
+import "../style/to-do-list.css";
+import { fetchTasks, deleteTask, addTask } from "../services/taskService";
+import { NewTask } from "../types/NewTask";
 
 const ToDoList = () => {
-  const data: Task[] = [
-    { id: "1", text: "Go work out", wasCompleted: false },
-    { id: "2", text: "Get fat", wasCompleted: false },
-    { id: "3", text: "Get skinny", wasCompleted: false },
-    { id: "4", text: "eat steak", wasCompleted: false },
-    { id: "5", text: "get it done", wasCompleted: false },
-  ];
-
-  const [tasksData, setTasksData] = useState<Task[]>(data);
+  const [tasksData, setTasksData] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
 
   useEffect(() => {
     fetchTasksFromDB();
   }, []);
 
-  const fetchTasksFromDB = () => {
-    setTasksData(data);
+  const fetchTasksFromDB = async () => {
+    try {
+      const tasks: Task[] = await fetchTasks();
+      setTasksData(tasks);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleTaskDeletion = async (deletedTask: Task) => {
-    console.log("trying to delete: " + deletedTask.id);
-    //todo: delete in db
+    await deleteTask(deletedTask.id);
+
     const filteredTasks = tasksData.filter(
       (currentTask) => currentTask.id !== deletedTask.id
     );
 
-    console.log(filteredTasks.length);
     setTasksData(filteredTasks);
   };
 
   const handleTaskAddition = async () => {
     setNewTask("");
-    //send to db, and re-render with answer
-    const newTaskData: Task = { id: "6", text: newTask, wasCompleted: false };
-    const updatedList: Task[] = [...tasksData, newTaskData];
+    const newTaskData: NewTask = { text: newTask };
+
+    const createdTaskData: Task = await addTask(newTaskData);
+
+    const updatedList: Task[] = [...tasksData, createdTaskData];
     setTasksData(updatedList);
   };
 
